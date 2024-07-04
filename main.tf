@@ -5,7 +5,7 @@ provider "aws" {
 # PostgreSQL Subnet Group
 resource "aws_db_subnet_group" "postgres_subnet_group" {
   name       = "postgres-subnet-group"
-  subnet_ids = ["subnet-0f72be4624adad8ff"]
+  subnet_ids = ["subnet-0f72be4624adad8ff","subnet-062aedcd420fbf6f6"]
 }
 
 # PostgreSQL Instance
@@ -45,11 +45,11 @@ resource "aws_security_group" "db_sg" {
   }
 }
 
-# Redis Cluster
+# Redis instance
 resource "aws_elasticache_cluster" "redis" {
   cluster_id           = "redis-instance"
   engine               = "redis"
-  engine_version       = "7.x"
+  engine_version       = "7.1"
   node_type            = "cache.t3.micro"
   num_cache_nodes      = 1
   parameter_group_name = "default.redis7"
@@ -59,13 +59,13 @@ resource "aws_elasticache_cluster" "redis" {
 
 # Subnet Group for Redis
 resource "aws_elasticache_subnet_group" "redis_subnet_group" {
-  name       = "tfecache-subnet-group"
+  name       = "redis-subnet-group"
   subnet_ids = ["subnet-0f72be4624adad8ff"]
 }
 
 # Security Group for Redis
 resource "aws_security_group" "redis_sg" {
-  name        = "tfecache-sg"
+  name        = "redis-sg"
   description = "Allow internal VPC access to Redis"
   vpc_id      = "vpc-0cc3c139f96487cc0"
 
