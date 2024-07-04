@@ -1,2 +1,2 @@
 # build-rds-redis
-Build Postgre DB and Redis for TFE
+Build Postgre DB and Redis instances for Terraform Enterprise.
