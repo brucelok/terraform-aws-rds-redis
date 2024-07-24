@@ -1,44 +1,37 @@
-# build-rds-redis
-This repo is to quickly build the Postgre DB and Redis instances on AWS for Terraform Enterprise.
-Before Terraform Apply, review the variables file and update the `rds_password`
+# Terraform AWS RDS and Redis Module
+This private module is to quickly build the external services (RDS Postsgre DB and Redis instances) on AWS required deploying [Terraform Enterprise on Docker](https://developer.hashicorp.com/terraform/enterprise/flexible-deployments/install/docker/requirements). 
 
-Once Apply is completed, it will output some values. For example:
+Once the provision is completed, it will print out the following outputs. For example:
 ```
 postgres_server_details = {
   "database_name" = "tfedb"
-  "hostname" = "postgres-instance.ckgqyibxexph.ap-southeast-2.rds.amazonaws.com"
+  "hostname" = "postgres-instance.xxxxxxxx.ap-southeast-2.rds.amazonaws.com"
   "port" = 5432
 }
 redis_cache_details = {
-  "hostname" = "redis-instance.ls32dv.0001.apse2.cache.amazonaws.com"
+  "hostname" = "redis-instance.xxxxxxx.0001.apse2.cache.amazonaws.com"
   "port" = 6379
 }
 region = "ap-southeast-2"
 ```
 
-With these outputs, test the connectivitiy to the instances within the the same VPC. For example:
+With these outputs, test the connectivity to the external services within the the same VPC. For example:
 
-Postgres
-
+**Postgres**
 ```
-$ PGPASSWORD=$PASSWORD psql -h postgres-instance.ckgqyibxexph.ap-southeast-2.rds.amazonaws.com -U postgres -c "\l"
+$ PGPASSWORD=$PASSWORD psql -h postgres-instance.xxxxxx.ap-southeast-2.rds.amazonaws.com -U postgres -c "\l"
                                   List of databases
    Name    |  Owner   | Encoding |   Collate   |    Ctype    |   Access privileges
 -----------+----------+----------+-------------+-------------+-----------------------
  postgres  | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
- rdsadmin  | rdsadmin | UTF8     | en_US.UTF-8 | en_US.UTF-8 | rdsadmin=CTc/rdsadmin
- template0 | rdsadmin | UTF8     | en_US.UTF-8 | en_US.UTF-8 | =c/rdsadmin          +
-           |          |          |             |             | rdsadmin=CTc/rdsadmin
- template1 | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 | =c/postgres          +
-           |          |          |             |             | postgres=CTc/postgres
- tfedb     | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
+...
 (5 rows)
 ```
 
-Redis
+**Redis**
 ```
 $ redis-cli -h redis-instance.ls32dv.0001.apse2.cache.amazonaws.com -p 6379 ping
 PONG
 ```
 
-Next, bulid the Terraform Enterprise Docker deployment over an EC2 within the same VPC.
+Next, configure the [Docker Compose YAML file](https://developer.hashicorp.com/terraform/enterprise/flexible-deployments/install/docker/install#external-services) to specify the hostnames of the PostgreSQL and Redis instances. Then, deploy the Terraform Enterprise Docker setup on an EC2 instance within the same VPC.
