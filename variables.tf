@@ -21,3 +21,14 @@ variable "rds_password" {
   type        = string
   sensitive   = true
 }
+
+#variable "redis_username" {
+#  description = "The Redis username"
+#  type        = string
+#}
+#
+#variable "redis_password" {
+#  description = "The Redis password"
+#  type        = string
+#  sensitive   = true
+#}
