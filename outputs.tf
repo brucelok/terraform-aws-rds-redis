@@ -13,10 +13,10 @@ output "postgres_server_details" {
   #  sensitive = true
 }
 
-output "redis_cache_details" {
-  description = "Redis cache details"
-  value = {
-    hostname = aws_elasticache_cluster.redis.cache_nodes[0].address
-    port     = aws_elasticache_cluster.redis.cache_nodes[0].port
-  }
-}
+#output "redis_cache_details" {
+#  description = "Redis cache details"
+#  value = {
+#    hostname = aws_elasticache_cluster.redis.cache_nodes[0].address
+#    port     = aws_elasticache_cluster.redis.cache_nodes[0].port
+#  }
+#}

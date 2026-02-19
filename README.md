@@ -1,3 +1,5 @@
+# THIS Terraform code is only used for build the PostgreSQL database for the Replicated TFE https://repbruce.tf-support.hashicorpdemo.com.   Redis instance is not required in this external mode.  So there should be a PostgreSQL database here.
+
 # Terraform AWS RDS and Redis Module
 This private module is to quickly build the external services (RDS Postsgre DB and Redis instances) on AWS required deploying [Terraform Enterprise on Docker](https://developer.hashicorp.com/terraform/enterprise/flexible-deployments/install/docker/requirements). 
 
